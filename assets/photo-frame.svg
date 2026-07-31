@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 820" role="img" aria-labelledby="title desc">
+  <title id="title">Wedding photo frame placeholder</title>
+  <desc id="desc">A gold carved frame intended for replacing with personal wedding photos.</desc>
+  <defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#815011"/><stop offset=".45" stop-color="#ffe6a0"/><stop offset="1" stop-color="#956018"/></linearGradient><radialGradient id="bg"><stop stop-color="#ffffff" stop-opacity=".2"/><stop offset="1" stop-color="#8d0d2f" stop-opacity=".85"/></radialGradient></defs>
+  <rect x="35" y="35" width="530" height="750" rx="54" fill="url(#g)"/>
+  <rect x="75" y="75" width="450" height="670" rx="34" fill="url(#bg)" stroke="#fff0b5" stroke-width="10" stroke-dasharray="18 18"/>
+  <path d="M150 665c80-122 220-122 300 0" fill="none" stroke="#ffe6a0" stroke-width="22" stroke-linecap="round" opacity=".6"/>
+  <circle cx="300" cy="308" r="92" fill="#ffe6a0" opacity=".45"/>
+  <text x="300" y="455" text-anchor="middle" font-family="Georgia,serif" font-size="38" fill="#fff4cf">YOUR PHOTO</text>
+</svg>

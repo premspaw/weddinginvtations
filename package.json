@@ -1,0 +1,11 @@
+{
+  "name": "south-indian-wedding-invitation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Magical 3D South Indian wedding invitation microsite.",
+  "scripts": {
+    "start": "python3 -m http.server 4173 --bind 0.0.0.0",
+    "build": "node scripts/build.js"
+  },
+  "devDependencies": {}
+}
