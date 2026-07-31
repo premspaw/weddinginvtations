@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#740c24" />
+    <meta name="description" content="A magical interactive South Indian wedding invitation with 3D layers, animated rituals, gallery placeholders, and scratch reveal details." />
+    <title>Magical South Indian Wedding Invitation</title>
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+  <body>
+    <main>
+      <div class="progress"></div>
+      <div class="petal-field" aria-hidden="true"></div>
+      <section class="hero section-panel">
+        <div class="stage3d" aria-hidden="true"><img class="mandapam-art mandapam-depth-back" src="assets/mandapam-3d.svg" alt="" /><div class="mandapam"><div class="gopuram gopuram-left"></div><div class="gopuram gopuram-right"></div><div class="canopy"><span></span><span></span><span></span></div><div class="pillar pillar-one"></div><div class="pillar pillar-two"></div><div class="pillar pillar-three"></div><div class="pillar pillar-four"></div><div class="swing-bell bell-one"></div><div class="swing-bell bell-two"></div><div class="lamp lamp-left"></div><div class="lamp lamp-right"></div></div><img class="mandapam-art mandapam-depth-front" src="assets/mandapam-3d.svg" alt="" /></div>
+        <div class="hero-copy"><p class="eyebrow">✦ South Indian Wedding Invitation</p><h1>Ananya <span>&</span> Arjun</h1><p class="hero-text">A living digital invite with bells, banana leaves, jasmine trails, glowing diyas, 3D mandapam layers, story blocks, and space for your own memories.</p><div class="hero-actions"><a href="#reveal" class="primary">Reveal the Date</a><a href="#gallery" class="secondary">Add Photos</a></div></div>
+      </section>
+      <section class="section-panel story-section"><div class="section-heading"><p class="eyebrow">♫ Scroll Story</p><h2>From first hello to forever</h2></div><div class="story-river"><div class="story-orb" style="--step:0"><span>01</span><p>First meeting under monsoon skies</p></div><div class="story-orb" style="--step:1"><span>02</span><p>Families exchange blessings</p></div><div class="story-orb" style="--step:2"><span>03</span><p>Haldi, mehendi, sangeet and laughter</p></div><div class="story-orb" style="--step:3"><span>04</span><p>Sacred knot before the agni</p></div></div></section>
+      <section id="gallery" class="section-panel gallery-section"><div class="section-heading"><p class="eyebrow">▧ Personal Image Placeholders</p><h2>Swap these with your couple, family and ritual photos</h2></div><div class="photo-grid"><article class="photo-card tall"><div class="photo-glow"></div><img src="assets/photo-frame.svg" alt="Decorative placeholder frame for Couple Portrait" /><strong>Couple Portrait</strong><span>Drop your personal image here</span></article><article class="photo-card"><div class="photo-glow"></div><img src="assets/photo-frame.svg" alt="Decorative placeholder frame for Engagement Moment" /><strong>Engagement Moment</strong><span>Drop your personal image here</span></article><article class="photo-card"><div class="photo-glow"></div><img src="assets/photo-frame.svg" alt="Decorative placeholder frame for Family Blessings" /><strong>Family Blessings</strong><span>Drop your personal image here</span></article><article class="photo-card"><div class="photo-glow"></div><img src="assets/photo-frame.svg" alt="Decorative placeholder frame for Mehendi or Haldi" /><strong>Mehendi / Haldi</strong><span>Drop your personal image here</span></article><article class="photo-card tall"><div class="photo-glow"></div><img src="assets/photo-frame.svg" alt="Decorative placeholder frame for Wedding Ritual" /><strong>Wedding Ritual</strong><span>Drop your personal image here</span></article></div></section>
+      <section id="reveal" class="section-panel reveal-section"><div class="section-heading"><p class="eyebrow">♥ Interactive Detail Reveal</p><h2>Scratch the golden card</h2></div><div class="scratch-card"><div class="reveal-details"><h3>Sunday, 24 November 2026</h3><p>Muhurtham: 7:45 AM - 9:15 AM</p><p>⌖ Sri Venkateswara Kalyana Mantapam, Chennai</p></div><canvas class="scratch-layer" aria-label="Scratch layer revealing date and venue"></canvas></div></section>
+      <section class="finale section-panel"><img class="banana-arch-art" src="assets/banana-leaf-arch.svg" alt="South Indian banana leaf wedding arch" /><div class="banana-arch"></div><h2>With love, blessings and endless celebration</h2><p>More cinematic intro animation can be added before this experience, while this page already brings motion, depth and interactive reveals through the full scroll.</p></section>
+    </main>
+    <script src="src/main.js"></script>
+  </body>
+</html>

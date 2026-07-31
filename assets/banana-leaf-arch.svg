@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="title desc">
+  <title id="title">Banana leaf wedding arch</title>
+  <desc id="desc">A ceremonial banana leaf arch with mango leaf toran for South Indian weddings.</desc>
+  <defs><linearGradient id="leaf" x1="0" x2="1"><stop stop-color="#073f25"/><stop offset=".45" stop-color="#31bd69"/><stop offset="1" stop-color="#0b5b35"/></linearGradient><linearGradient id="stem" x1="0" x2="1"><stop stop-color="#66400a"/><stop offset=".5" stop-color="#f0c95a"/><stop offset="1" stop-color="#70450d"/></linearGradient></defs>
+  <path d="M150 478c20-210 134-360 350-400 216 40 330 190 350 400" fill="none" stroke="url(#stem)" stroke-width="34" stroke-linecap="round"/>
+  <g fill="url(#leaf)">
+    <path d="M124 438C38 345 65 179 222 79c70 151 28 289-98 359Z"/><path d="M876 438c86-93 59-259-98-359-70 151-28 289 98 359Z"/>
+    <path d="M240 224c-82-68-71-164 34-214 38 95 18 172-34 214Z"/><path d="M760 224c82-68 71-164-34-214-38 95-18 172 34 214Z"/>
+  </g>
+  <path d="M236 197c170-74 358-74 528 0" fill="none" stroke="#f8d36c" stroke-width="12" stroke-linecap="round"/>
+  <g fill="#1ba85a"><path d="M298 198l34 76 34-76z"/><path d="M398 181l34 76 34-76z"/><path d="M498 174l34 76 34-76z"/><path d="M598 181l34 76 34-76z"/></g>
+</svg>
