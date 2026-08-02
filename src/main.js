@@ -667,17 +667,18 @@ function initAudioPlayer() {
   function startMusic() {
     stopAllMusic();
     
-    if (invitationData.customAudioUrl) {
-      // Play custom uploaded MP3 audio file
-      if (!customAudioEl) {
-        customAudioEl = new Audio(invitationData.customAudioUrl);
-        customAudioEl.loop = true;
-      } else {
-        customAudioEl.src = invitationData.customAudioUrl;
-      }
-      customAudioEl.play().catch(e => console.log('Autoplay blocked by browser. User interaction required.'));
+    const audioSrc = invitationData.customAudioUrl || 'assets/wedding_music.mp3';
+
+    // Play custom uploaded MP3 or bundled wedding music
+    if (!customAudioEl) {
+      customAudioEl = new Audio(audioSrc);
+      customAudioEl.loop = true;
     } else {
-      // Fallback Synth Ragam Nadaswaram notes
+      customAudioEl.src = audioSrc;
+    }
+    customAudioEl.volume = 0.7;
+    customAudioEl.play().catch(() => {
+      // Fallback Synth Ragam Nadaswaram notes if audio fails to load
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       }
@@ -685,7 +686,7 @@ function initAudioPlayer() {
         audioCtx.resume();
       }
       timerId = setInterval(playRagamNotes, 420);
-    }
+    });
     
     isPlaying = true;
     musicBtn.classList.add('playing');
