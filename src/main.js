@@ -480,8 +480,17 @@ function initScratchCard() {
   canvas.addEventListener('mousemove', scratch);
   window.addEventListener('mouseup', () => { isScratching = false; });
 
-  canvas.addEventListener('touchstart', (e) => { isScratching = true; scratch(e); });
-  canvas.addEventListener('touchmove', scratch);
+  canvas.addEventListener('touchstart', (e) => { 
+    isScratching = true; 
+    e.preventDefault(); 
+    scratch(e); 
+  }, { passive: false });
+  
+  canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    scratch(e);
+  }, { passive: false });
+  
   window.addEventListener('touchend', () => { isScratching = false; });
 
   const calBtn = document.getElementById('addToCalBtn');
@@ -499,6 +508,11 @@ function initScratchCard() {
       // Parse host config date or use default
       let rawDate = invitationData.weddingDate || '2026-11-24T07:45';
       const d = new Date(rawDate);
+      if (isNaN(d.getTime())) {
+        console.warn('Invalid wedding date. Using default date for calendar invite.');
+        d = new Date('2026-11-24T07:45:00');
+      }
+      
       const startStr = d.toISOString().replace(/-|:|\.\d\d\d/g, "");
       
       // End date 3 hours later

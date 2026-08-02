@@ -913,22 +913,22 @@ body:not(.guest-mode) .editable-text:focus {
   position: relative;
   margin-bottom: 3.5rem;
   width: 50%;
-  padding-right: 2.5rem;
+  padding-right: 3.5rem;
 }
 
 .timeline-item.right {
   left: 50%;
   padding-right: 0;
-  padding-left: 2.5rem;
+  padding-left: 3.5rem;
 }
 
 /* Circular Photo Nodes with Entrance Bloom Animation */
 .timeline-node {
   position: absolute;
   top: 15px;
-  right: -28px;
-  width: 56px;
-  height: 56px;
+  right: -40px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   background: var(--gold-gradient);
   color: var(--crimson-dark);
@@ -951,7 +951,7 @@ body:not(.guest-mode) .editable-text:focus {
 
 .timeline-item.right .timeline-node {
   right: auto;
-  left: -28px;
+  left: -40px;
 }
 
 @keyframes goldPulseRing {
@@ -963,9 +963,9 @@ body:not(.guest-mode) .editable-text:focus {
 /* Circular Story Thumbnails */
 .story-photo-node {
   position: absolute;
-  width: 56px;
-  height: 56px;
-  top: 10px;
+  width: 80px;
+  height: 80px;
+  top: 15px;
 }
 
 .timeline-thumb-img {
@@ -1574,12 +1574,17 @@ body:not(.guest-mode) .editable-text:focus {
   .photo-grid { grid-template-columns: 1fr; }
   
   .timeline-line { left: 20px; }
-  .timeline-item { width: 100%; padding-left: 60px; padding-right: 0; }
-  .timeline-item.right { left: 0; padding-left: 60px; }
-  .timeline-node { left: -5px !important; right: auto !important; }
+  .timeline-item { width: 100%; padding-left: 80px; padding-right: 0; }
+  .timeline-item.right { left: 0; padding-left: 80px; }
+  .timeline-node { left: -20px !important; right: auto !important; }
   
   .countdown-clock { gap: 0.5rem; }
   .time-unit { padding: 0.8rem 0.6rem; min-width: 70px; }
   .colon { font-size: 1.5rem; }
   .tithi-divider { display: none; }
 }
+
+.invitation-card .btn-outline-gold {
+  color: var(--crimson);
+}
+
