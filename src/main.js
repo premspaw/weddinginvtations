@@ -493,10 +493,11 @@ function initScratchCard() {
   
   window.addEventListener('touchend', () => { isScratching = false; });
 
-  const calBtn = document.getElementById('addToCalBtn');
-  if (calBtn) {
-    calBtn.addEventListener('click', () => {
-      // Generate Calendar details using saved custom text
+  const gCalBtn = document.getElementById('addToGoogleCalBtn');
+  const icsBtn = document.getElementById('downloadIcsBtn');
+
+  if (gCalBtn) {
+    gCalBtn.addEventListener('click', () => {
       const bride = invitationData.customText['bride-name'] || 'Meenakshi';
       const groom = invitationData.customText['groom-name'] || 'Abhinav';
       const venue = invitationData.customText['venue-summary'] || 'Sri Venkateswara Kalyana Mantapam, Mylapore, Chennai';
@@ -505,22 +506,65 @@ function initScratchCard() {
       const details = encodeURIComponent(`Join us for the auspicious Muhurtham of ${bride} and ${groom}.`);
       const location = encodeURIComponent(venue);
 
-      // Parse host config date or use default
       let rawDate = invitationData.weddingDate || '2026-11-24T07:45';
-      const d = new Date(rawDate);
+      let d = new Date(rawDate);
       if (isNaN(d.getTime())) {
-        console.warn('Invalid wedding date. Using default date for calendar invite.');
         d = new Date('2026-11-24T07:45:00');
       }
       
-      const startStr = d.toISOString().replace(/-|:|\.\d\d\d/g, "");
-      
-      // End date 3 hours later
+      const startStr = d.toISOString().replace(/-|:|\.\d+/g, "");
       d.setHours(d.getHours() + 3);
-      const endStr = d.toISOString().replace(/-|:|\.\d\d\d/g, "");
+      const endStr = d.toISOString().replace(/-|:|\.\d+/g, "");
 
       const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startStr}/${endStr}&details=${details}&location=${location}`;
       window.open(gcalUrl, '_blank');
+    });
+  }
+
+  if (icsBtn) {
+    icsBtn.addEventListener('click', () => {
+      const bride = invitationData.customText['bride-name'] || 'Meenakshi';
+      const groom = invitationData.customText['groom-name'] || 'Abhinav';
+      const venue = invitationData.customText['venue-summary'] || 'Sri Venkateswara Kalyana Mantapam, Mylapore, Chennai';
+
+      const title = `${bride} & ${groom} Wedding Kalyanam`;
+      const details = `Join us for the auspicious Muhurtham of ${bride} and ${groom}.`;
+      const location = venue;
+
+      let rawDate = invitationData.weddingDate || '2026-11-24T07:45';
+      let startDate = new Date(rawDate);
+      if (isNaN(startDate.getTime())) {
+        startDate = new Date('2026-11-24T07:45:00');
+      }
+      let endDate = new Date(startDate.getTime());
+      endDate.setHours(endDate.getHours() + 3);
+
+      const formatDate = (dateObj) => dateObj.toISOString().replace(/-|:|\.\d+/g, "");
+      
+      const icsLines = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//South Indian Wedding Invitation//EN',
+        'BEGIN:VEVENT',
+        `UID:wedding-${Date.now()}@weddinginvitations.com`,
+        `DTSTAMP:${formatDate(new Date())}`,
+        `DTSTART:${formatDate(startDate)}`,
+        `DTEND:${formatDate(endDate)}`,
+        `SUMMARY:${title}`,
+        `DESCRIPTION:${details}`,
+        `LOCATION:${location}`,
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ];
+
+      const blob = new Blob([icsLines.join('\r\n')], { type: 'text/calendar;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${title.replace(/\s+/g, '_')}.ics`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     });
   }
 }
