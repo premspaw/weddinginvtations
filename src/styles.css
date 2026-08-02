@@ -1362,6 +1362,18 @@ body.guest-mode .gallery-showcase {
   color: var(--gold);
 }
 
+.rsvp-section {
+  position: relative;
+  background: linear-gradient(rgba(59, 3, 17, 0.82), rgba(30, 1, 8, 0.95)), url('../assets/wedding_saptapadi_bg.jpg') no-repeat center center;
+  background-size: cover;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  padding: 80px 2rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
 .rsvp-card-wrap {
   max-width: 650px;
   margin: 0 auto;
