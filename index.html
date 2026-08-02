@@ -2,25 +2,683 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#740c24" />
-    <meta name="description" content="A magical interactive South Indian wedding invitation with 3D layers, animated rituals, gallery placeholders, and scratch reveal details." />
-    <title>Magical South Indian Wedding Invitation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="theme-color" content="#5A091E" />
+    <meta name="description" content="An auspicious 3D interactive South Indian wedding invitation microsite featuring festive Kalyana Mandapam background, Lagna Patrika, Ganesha vector motif, ceremonies, photo gallery customization, audio, and RSVP." />
+    
+    <!-- Title & SEO -->
+    <title>Meenakshi & Abhinav — South Indian Wedding Invitation & Lagna Patrika</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=Yatra One&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
     <link rel="stylesheet" href="src/styles.css" />
   </head>
   <body>
-    <main>
-      <div class="progress"></div>
-      <div class="petal-field" aria-hidden="true"></div>
-      <section class="hero section-panel">
-        <div class="stage3d" aria-hidden="true"><img class="mandapam-art mandapam-depth-back" src="assets/mandapam-3d.svg" alt="" /><div class="mandapam"><div class="gopuram gopuram-left"></div><div class="gopuram gopuram-right"></div><div class="canopy"><span></span><span></span><span></span></div><div class="pillar pillar-one"></div><div class="pillar pillar-two"></div><div class="pillar pillar-three"></div><div class="pillar pillar-four"></div><div class="swing-bell bell-one"></div><div class="swing-bell bell-two"></div><div class="lamp lamp-left"></div><div class="lamp lamp-right"></div></div><img class="mandapam-art mandapam-depth-front" src="assets/mandapam-3d.svg" alt="" /></div>
-        <div class="hero-copy"><p class="eyebrow">✦ South Indian Wedding Invitation</p><h1>Ananya <span>&</span> Arjun</h1><p class="hero-text">A living digital invite with bells, banana leaves, jasmine trails, glowing diyas, 3D mandapam layers, story blocks, and space for your own memories.</p><div class="hero-actions"><a href="#reveal" class="primary">Reveal the Date</a><a href="#gallery" class="secondary">Add Photos</a></div></div>
+    <!-- Ambient Floating Petals & Sparkle Canvas -->
+    <canvas id="petalCanvas" aria-hidden="true"></canvas>
+
+    <!-- Top Glassmorphism Navigation -->
+    <header class="navbar" id="navbar">
+      <div class="nav-brand">
+        <span class="brand-sloka">|| श्री ||</span>
+        <span class="brand-names editable-text" data-key="brand-names">Meenakshi & Abhinav</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#hero">Invitation</a>
+        <a href="#lagna-patrika">Lagna Patrika</a>
+        <a href="#blessings">Blessings</a>
+        <a href="#story">Our Story</a>
+        <a href="#ceremonies">Ceremonies</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#rsvp">RSVP</a>
+      </nav>
+      <div class="nav-actions">
+        <!-- Host Mode vs Guest View Mode Toggle -->
+        <button id="viewModeBtn" class="mode-toggle-btn editor-only" title="Toggle between Customization Editor and Guest Share View">
+          <span class="mode-icon">👁️</span>
+          <span class="mode-text">Preview Guest View</span>
+        </button>
+
+        <button id="shareLinkBtn" class="share-link-btn" title="Copy Shareable Guest Link">
+          <span>🔗 Copy Guest Link</span>
+        </button>
+
+        <button id="musicBtn" class="music-toggle" aria-label="Toggle Wedding Music">
+          <div class="eq-bars">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <span class="music-text">Wedding Nadaswaram</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mode Indicator Banner for Host Editor -->
+    <div id="editorBanner" class="editor-mode-banner editor-only">
+      <span>🎨 <strong>Host Customization Studio Active:</strong> Click directly on any text to edit! Upload custom photos below. Click <em>"Preview Guest View"</em> or <em>"Copy Guest Link"</em> when ready to share!</span>
+    </div>
+
+    <!-- Main Container -->
+    <main class="app-container">
+      
+      <!-- HERO PARALLAX SECTION (FESTIVE KALYANA MANDAPAM WEDDING BACKGROUND) -->
+      <section id="hero" class="hero-stage">
+        <!-- 3D Layered Backgrounds -->
+        <div class="parallax-layer bg-layer" data-speed="0.15">
+          <img src="assets/temple_bg.png" alt="South Indian Kalyana Mandapam Wedding Painting" class="bg-img" />
+          <div class="bg-overlay"></div>
+        </div>
+
+        <div class="parallax-layer mid-layer" data-speed="0.4">
+          <div class="floating-bells">
+            <div class="bell b1">🔔</div>
+            <div class="bell b2">🔔</div>
+            <div class="bell b3">🔔</div>
+          </div>
+        </div>
+
+        <!-- Main Hero Invitation Card -->
+        <div class="hero-content parallax-layer content-layer" data-speed="0.75">
+          <div class="invitation-card hero-card" data-motion="scale-in">
+            <div class="card-border-gold"></div>
+            
+            <div class="invitation-header">
+              <!-- Golden Ganesha Vector Icon -->
+              <div class="ganesha-icon-wrap">
+                <svg class="ganesha-svg" viewBox="0 0 100 100" width="75" height="75">
+                  <defs>
+                    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#FFD700" />
+                      <stop offset="50%" stop-color="#DAA520" />
+                      <stop offset="100%" stop-color="#B8860B" />
+                    </linearGradient>
+                  </defs>
+                  <path fill="url(#goldGrad)" d="M50,10 C42,10 36,16 36,24 C36,30 40,35 45,37 C38,38 30,42 26,48 C22,54 22,62 26,68 C30,74 38,78 48,78 C58,78 66,74 70,68 C74,62 74,54 70,48 C66,42 58,38 51,37 C56,35 60,30 60,24 C60,16 54,10 50,10 Z M50,16 C54,16 56,19 56,23 C56,27 54,30 50,30 C46,30 44,27 44,23 C44,19 46,16 50,16 Z M48,42 C56,42 64,46 66,52 C68,58 66,64 62,68 C58,72 50,74 48,74 C42,74 36,72 34,68 C30,64 30,58 34,52 C38,46 44,42 48,42 Z"/>
+                  <circle cx="50" cy="21" r="3" fill="#E65100" />
+                </svg>
+              </div>
+              <span class="sacred-symbol editable-text" data-key="sacred-symbol">|| श्री महागणपतये नमः ||</span>
+              <p class="eyebrow-text editable-text" data-key="eyebrow-text">With the divine blessings of Almighty & Families</p>
+            </div>
+
+            <div class="couple-names-wrap">
+              <h1 class="bride-name editable-text" data-key="bride-name">Meenakshi</h1>
+              <span class="ampersand">&</span>
+              <h1 class="groom-name editable-text" data-key="groom-name">Abhinav</h1>
+            </div>
+
+            <div class="invitation-quote">
+              <p class="editable-text" data-key="invitation-quote">Cordially invite you to share in the joy and sacred celebrations of their wedding union</p>
+            </div>
+
+            <div class="date-badge">
+              <div class="badge-line"></div>
+              <div class="badge-content">
+                <span class="badge-day editable-text" data-key="wedding-day">SUNDAY</span>
+                <span class="badge-date editable-text" data-key="wedding-date-num">24</span>
+                <span class="badge-month editable-text" data-key="wedding-month-year">NOV 2026</span>
+              </div>
+              <div class="badge-line"></div>
+            </div>
+
+            <div class="hero-venue-summary">
+              <p class="editable-text" data-key="venue-summary">📍 Sri Venkateswara Kalyana Mantapam, Mylapore, Chennai</p>
+            </div>
+
+            <div class="hero-cta-group">
+              <a href="#lagna-patrika" class="btn btn-gold">📜 Lagna Patrika</a>
+              <a href="#ceremonies" class="btn btn-outline-gold">View Ceremonies</a>
+              <a href="#rsvp" class="btn btn-crimson">RSVP Now</a>
+            </div>
+
+            <div class="scroll-indicator">
+              <span>Scroll to Explore Ceremonies</span>
+              <div class="scroll-chevron"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Foreground Overlay Pillars -->
+        <div class="parallax-layer fg-layer" data-speed="1.2">
+          <div class="garland-top"></div>
+        </div>
       </section>
-      <section class="section-panel story-section"><div class="section-heading"><p class="eyebrow">♫ Scroll Story</p><h2>From first hello to forever</h2></div><div class="story-river"><div class="story-orb" style="--step:0"><span>01</span><p>First meeting under monsoon skies</p></div><div class="story-orb" style="--step:1"><span>02</span><p>Families exchange blessings</p></div><div class="story-orb" style="--step:2"><span>03</span><p>Haldi, mehendi, sangeet and laughter</p></div><div class="story-orb" style="--step:3"><span>04</span><p>Sacred knot before the agni</p></div></div></section>
-      <section id="gallery" class="section-panel gallery-section"><div class="section-heading"><p class="eyebrow">▧ Personal Image Placeholders</p><h2>Swap these with your couple, family and ritual photos</h2></div><div class="photo-grid"><article class="photo-card tall"><div class="photo-glow"></div><img src="assets/photo-frame.svg" alt="Decorative placeholder frame for Couple Portrait" /><strong>Couple Portrait</strong><span>Drop your personal image here</span></article><article class="photo-card"><div class="photo-glow"></div><img src="assets/photo-frame.svg" alt="Decorative placeholder frame for Engagement Moment" /><strong>Engagement Moment</strong><span>Drop your personal image here</span></article><article class="photo-card"><div class="photo-glow"></div><img src="assets/photo-frame.svg" alt="Decorative placeholder frame for Family Blessings" /><strong>Family Blessings</strong><span>Drop your personal image here</span></article><article class="photo-card"><div class="photo-glow"></div><img src="assets/photo-frame.svg" alt="Decorative placeholder frame for Mehendi or Haldi" /><strong>Mehendi / Haldi</strong><span>Drop your personal image here</span></article><article class="photo-card tall"><div class="photo-glow"></div><img src="assets/photo-frame.svg" alt="Decorative placeholder frame for Wedding Ritual" /><strong>Wedding Ritual</strong><span>Drop your personal image here</span></article></div></section>
-      <section id="reveal" class="section-panel reveal-section"><div class="section-heading"><p class="eyebrow">♥ Interactive Detail Reveal</p><h2>Scratch the golden card</h2></div><div class="scratch-card"><div class="reveal-details"><h3>Sunday, 24 November 2026</h3><p>Muhurtham: 7:45 AM - 9:15 AM</p><p>⌖ Sri Venkateswara Kalyana Mantapam, Chennai</p></div><canvas class="scratch-layer" aria-label="Scratch layer revealing date and venue"></canvas></div></section>
-      <section class="finale section-panel"><img class="banana-arch-art" src="assets/banana-leaf-arch.svg" alt="South Indian banana leaf wedding arch" /><div class="banana-arch"></div><h2>With love, blessings and endless celebration</h2><p>More cinematic intro animation can be added before this experience, while this page already brings motion, depth and interactive reveals through the full scroll.</p></section>
+
+      <!-- LAGNA PATRIKA SECTION (SACRED WEDDING INVITATION LETTER - MOBILE FIRST) -->
+      <section id="lagna-patrika" class="section lagna-patrika-section">
+        <div class="section-heading" data-motion="fade-up">
+          <span class="sanskrit-title editable-text" data-key="patrika-sanskrit-title">|| शुभ विवाह निमंत्रण पत्र ||</span>
+          <h2>Sacred Lagna Patrika</h2>
+          <p class="sub-heading editable-text" data-key="patrika-sub-heading">Traditional South Indian Wedding Announcement</p>
+          <div class="decorative-divider"><span>🪷</span></div>
+        </div>
+
+        <div class="lagna-card-wrap" data-motion="scale-in">
+          <div class="lagna-card-inner">
+            <img src="assets/lagna_patrika_bg.png" alt="Lagna Patrika Background Tanjore Art" class="lagna-bg-img" />
+            <div class="lagna-content-overlay">
+              
+              <div class="lagna-header">
+                <!-- SVG Ganesha Motif -->
+                <div class="lagna-ganesha-wrapper">
+                  <svg class="ganesha-svg" viewBox="0 0 100 100" width="80" height="80">
+                    <path fill="url(#goldGrad)" d="M50,10 C42,10 36,16 36,24 C36,30 40,35 45,37 C38,38 30,42 26,48 C22,54 22,62 26,68 C30,74 38,78 48,78 C58,78 66,74 70,68 C74,62 74,54 70,48 C66,42 58,38 51,37 C56,35 60,30 60,24 C60,16 54,10 50,10 Z M50,16 C54,16 56,19 56,23 C56,27 54,30 50,30 C46,30 44,27 44,23 C44,19 46,16 50,16 Z M48,42 C56,42 64,46 66,52 C68,58 66,64 62,68 C58,72 50,74 48,74 C42,74 36,72 34,68 C30,64 30,58 34,52 C38,46 44,42 48,42 Z"/>
+                    <circle cx="50" cy="21" r="3" fill="#E65100" />
+                  </svg>
+                </div>
+
+                <span class="lagna-sloka-head editable-text" data-key="lagna-sloka-head">|| श्री प्रसन्नाञ्जनेय प्रसन्ना ||</span>
+                <h3 class="lagna-main-title editable-text" data-key="lagna-main-title">शुभ विवाह मुहूर्त पत्रिका</h3>
+                <p class="lagna-sub-sloka editable-text" data-key="lagna-sub-sloka">"सर्वे भवन्तु सुखिनः सर्वे सन्तु निरामयाः"</p>
+              </div>
+
+              <div class="lagna-body">
+                <p class="patrika-text editable-text" data-key="patrika-intro">
+                  With the divine blessings of Lord Venkateswara and elders of our family, we request your presence for the sacred marriage ceremony:
+                </p>
+
+                <!-- Centered Stacked Couple Layout (Meenakshi TOP -> WEDS Center -> Abhinav BOTTOM) -->
+                <div class="patrika-couple-stacked">
+                  <div class="patrika-person-card">
+                    <span class="person-role editable-text" data-key="bride-role">Bride (चि. सौ.)</span>
+                    <h4 class="person-name editable-text" data-key="bride-name">Meenakshi</h4>
+                    <p class="person-details editable-text" data-key="bride-family">D/o Smt. Lakshmi & Sri. Ramakrishnan<br/>Granddaughter of Late Sri. Swaminathan Iyer</p>
+                  </div>
+
+                  <div class="weds-badge-wrap">
+                    <div class="weds-circle">
+                      <span>Weds</span>
+                    </div>
+                  </div>
+
+                  <div class="patrika-person-card">
+                    <span class="person-role editable-text" data-key="groom-role">Groom (चि.)</span>
+                    <h4 class="person-name editable-text" data-key="groom-name">Abhinav</h4>
+                    <p class="person-details editable-text" data-key="groom-family">S/o Smt. Radhika & Sri. Venkatraman<br/>Grandson of Late Sri. Krishnamurthy Sastry</p>
+                  </div>
+                </div>
+
+                <div class="lagna-tithi-box">
+                  <div class="tithi-item">
+                    <span>Auspicious Tithi</span>
+                    <strong class="editable-text" data-key="tithi-val">Pournami / Swathi Nakshatram</strong>
+                  </div>
+                  <div class="tithi-divider"></div>
+                  <div class="tithi-item">
+                    <span>Lagnam</span>
+                    <strong class="editable-text" data-key="lagnam-val">Vrishabha Lagnam</strong>
+                  </div>
+                  <div class="tithi-divider"></div>
+                  <div class="tithi-item">
+                    <span>Brahma Muhurtham</span>
+                    <strong class="editable-text" data-key="muhurtham-val">7:45 AM – 9:15 AM</strong>
+                  </div>
+                </div>
+
+                <p class="patrika-footer-blessing editable-text" data-key="patrika-footer">
+                  We request your gracious presence with your family to bless the newlywed couple with health, happiness, and prosperity.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DIVINE BLESSINGS SECTION -->
+      <section id="blessings" class="section blessings-section">
+        <div class="section-heading" data-motion="fade-up">
+          <span class="sanskrit-title editable-text" data-key="blessings-title">|| मङ्गलश्लोकम् ||</span>
+          <h2>Auspicious Blessings</h2>
+          <div class="decorative-divider"><span>🪔</span></div>
+        </div>
+
+        <div class="blessings-grid">
+          <div class="sloka-card glass-card" data-motion="slide-right">
+            <div class="sloka-sanskrit editable-text" data-key="sloka-sanskrit">
+              वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।<br/>
+              निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥
+            </div>
+            <div class="sloka-meaning editable-text" data-key="sloka-meaning">
+              "O Lord Ganesha with a curved trunk and massive body, possessing the brilliance of a million suns, please remove all obstacles from our new beginning, always."
+            </div>
+          </div>
+
+          <div class="parents-card glass-card" data-motion="slide-left">
+            <h3>Beloved Families</h3>
+            <div class="family-tree">
+              <div class="family-side">
+                <p class="family-role editable-text" data-key="bride-parents-title">Bride's Parents</p>
+                <h4 class="editable-text" data-key="bride-parents-names">Smt. Lakshmi & Sri. Ramakrishnan</h4>
+                <p class="family-origin editable-text" data-key="bride-origin">Chennai, Tamil Nadu</p>
+              </div>
+              <div class="family-divider">✨</div>
+              <div class="family-side">
+                <p class="family-role editable-text" data-key="groom-parents-title">Groom's Parents</p>
+                <h4 class="editable-text" data-key="groom-parents-names">Smt. Radhika & Sri. Venkatraman</h4>
+                <p class="family-origin editable-text" data-key="groom-origin">Bengaluru, Karnataka</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OUR STORY TIMELINE (WITH CIRCULAR PHOTO THUMBNAILS & EDITABLE UPLOAD SLOTS) -->
+      <section id="story" class="section story-section">
+        <div class="section-heading" data-motion="fade-up">
+          <span class="eyebrow">Journey of Love</span>
+          <h2>Our Story</h2>
+          <p class="sub-heading editable-text" data-key="story-sub-heading">From quiet glances to forever togetherness</p>
+          <div class="decorative-divider"><span>🌸</span></div>
+        </div>
+
+        <div class="timeline-container">
+          <div class="timeline-line"></div>
+          
+          <!-- Story Node 1: First Hello -->
+          <div class="timeline-item left" data-motion="slide-right">
+            <div class="timeline-node story-photo-node">
+              <img src="assets/couple_portrait.png" alt="First Hello" class="timeline-thumb-img" id="img-story-1" />
+              <label class="story-upload-btn editor-only" title="Upload story photo">
+                <span>📷</span>
+                <input type="file" accept="image/*" class="slot-file-input" data-target="img-story-1" />
+              </label>
+            </div>
+            <div class="timeline-content glass-card">
+              <span class="story-date editable-text" data-key="story-1-date">August 2024</span>
+              <h3 class="editable-text" data-key="story-1-title">First Hello</h3>
+              <p class="editable-text" data-key="story-1-desc">Met under the serene monsoon rain in Chennai over a cup of authentic filter coffee. Conversations flowed effortlessly till sunset.</p>
+            </div>
+          </div>
+
+          <!-- Story Node 2: The Golden Proposal -->
+          <div class="timeline-item right" data-motion="slide-left">
+            <div class="timeline-node story-photo-node">
+              <img src="assets/diya_lamp.png" alt="The Proposal" class="timeline-thumb-img" id="img-story-2" />
+              <label class="story-upload-btn editor-only" title="Upload story photo">
+                <span>📷</span>
+                <input type="file" accept="image/*" class="slot-file-input" data-target="img-story-2" />
+              </label>
+            </div>
+            <div class="timeline-content glass-card">
+              <span class="story-date editable-text" data-key="story-2-date">December 2024</span>
+              <h3 class="editable-text" data-key="story-2-title">The Golden Proposal</h3>
+              <p class="editable-text" data-key="story-2-desc">Against the backdrop of starry waves at Kovalam beach, Abhinav asked the eternal question. With joyous tears, Meenakshi said YES!</p>
+            </div>
+          </div>
+
+          <!-- Story Node 3: Nischayathartham -->
+          <div class="timeline-item left" data-motion="slide-right">
+            <div class="timeline-node story-photo-node">
+              <img src="assets/lagna_patrika_bg.png" alt="Nischayathartham" class="timeline-thumb-img" id="img-story-3" />
+              <label class="story-upload-btn editor-only" title="Upload story photo">
+                <span>📷</span>
+                <input type="file" accept="image/*" class="slot-file-input" data-target="img-story-3" />
+              </label>
+            </div>
+            <div class="timeline-content glass-card">
+              <span class="story-date editable-text" data-key="story-3-date">April 2025</span>
+              <h3 class="editable-text" data-key="story-3-title">Nischayathartham</h3>
+              <p class="editable-text" data-key="story-3-desc">Both families gathered for formal engagement blessings, exchanging silk sarees, fruits, and traditional sweets amidst smiles and laughter.</p>
+            </div>
+          </div>
+
+          <!-- Story Node 4: Sacred Kalyanam -->
+          <div class="timeline-item right" data-motion="slide-left">
+            <div class="timeline-node story-photo-node">
+              <img src="assets/temple_bg.png" alt="Sacred Kalyanam" class="timeline-thumb-img" id="img-story-4" />
+              <label class="story-upload-btn editor-only" title="Upload story photo">
+                <span>📷</span>
+                <input type="file" accept="image/*" class="slot-file-input" data-target="img-story-4" />
+              </label>
+            </div>
+            <div class="timeline-content glass-card">
+              <span class="story-date editable-text" data-key="story-4-date">November 2026</span>
+              <h3 class="editable-text" data-key="story-4-title">Sacred Kalyanam</h3>
+              <p class="editable-text" data-key="story-4-desc">Ready to walk seven sacred steps together around the holy Agni, taking lifetime vows of companionship and devotion.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CEREMONIES & EVENTS SECTION (PREMIUM SOUTH INDIAN VECTOR SVG ICONS) -->
+      <section id="ceremonies" class="section ceremonies-section">
+        <div class="section-heading" data-motion="fade-up">
+          <span class="eyebrow">Auspicious Celebrations</span>
+          <h2>Wedding Ceremonies</h2>
+          <p class="sub-heading">We request your esteemed presence across all functions</p>
+          <div class="decorative-divider"><span>🌼</span></div>
+        </div>
+
+        <div class="events-grid">
+          <!-- Muhurtham / Kalyanam Card (Ornate Golden Kalasam & Sacred Mangalsutra Vector SVG Icon) -->
+          <article class="event-card kalyanam-card highlight-card" data-motion="scale-in">
+            <div class="event-card-img-wrap">
+              <img src="assets/couple_portrait.png" alt="Muhurtham" class="event-banner-img" id="ceremony-img-muhurtham" />
+            </div>
+            <div class="card-tag">Main Ceremony</div>
+            <div class="event-card-body">
+              <div class="premium-ceremony-icon-wrap">
+                <svg class="ceremony-svg" viewBox="0 0 100 100" width="54" height="54">
+                  <path fill="url(#goldGrad)" d="M50,12 C44,12 40,16 40,22 C40,24 41,26 42,28 C34,30 28,37 28,46 C28,58 38,68 50,68 C62,68 72,58 72,46 C72,37 66,30 58,28 C59,26 60,24 60,22 C60,16 56,12 50,12 Z M50,18 C53,18 55,20 55,22 C55,24 53,26 50,26 C47,26 45,24 45,22 C45,20 47,18 50,18 Z M50,34 C58,34 64,40 64,48 C64,56 58,62 50,62 C42,62 36,56 36,48 C36,40 42,34 50,34 Z" />
+                  <circle cx="50" cy="48" r="6" fill="#E65100" />
+                  <path fill="#FFD700" d="M30,76 Q50,90 70,76 Q50,84 30,76 Z" />
+                </svg>
+              </div>
+              <h3 class="editable-text" data-key="ceremony-1-title">Muhurtham (Kalyanam)</h3>
+              <div class="event-time-place">
+                <p>📅 <strong class="editable-text" data-key="ceremony-1-date">Sunday, 24th November 2026</strong></p>
+                <p>⏰ <strong class="editable-text" data-key="ceremony-1-time">7:45 AM – 9:15 AM</strong> (Brahma Muhurtham)</p>
+                <p>📍 <strong class="editable-text" data-key="ceremony-1-venue">Sri Venkateswara Kalyana Mantapam</strong></p>
+                <p class="venue-sub editable-text" data-key="ceremony-1-subvenue">Mylapore, Chennai</p>
+              </div>
+              <p class="event-desc editable-text" data-key="ceremony-1-desc">The sacred tying of Mangalsutra (Thali) followed by Saptapadi around the agni.</p>
+              <div class="dress-code">
+                <span>Dress Code:</span> <span class="editable-text" data-key="ceremony-1-dress">Traditional Silk Saree & Dhoti / Kurta</span>
+              </div>
+              <a id="ceremony-1-map" href="https://maps.google.com/?q=Mylapore+Chennai" target="_blank" rel="noopener" class="btn btn-outline-gold map-link-btn">📍 View Google Map</a>
+            </div>
+          </article>
+
+          <!-- Reception Card (Royal Nadaswaram & Festive Crown Vector SVG Icon) -->
+          <article class="event-card" data-motion="scale-in">
+            <div class="event-card-img-wrap">
+              <img src="assets/temple_bg.png" alt="Grand Reception" class="event-banner-img" id="ceremony-img-reception" />
+            </div>
+            <div class="event-card-body">
+              <div class="premium-ceremony-icon-wrap">
+                <svg class="ceremony-svg" viewBox="0 0 100 100" width="54" height="54">
+                  <path fill="url(#goldGrad)" d="M20,75 L35,25 L45,25 L60,75 L50,75 L45,55 L35,55 L30,75 Z M37,45 L43,45 L40,32 Z M70,25 C75,25 80,30 80,35 C80,40 75,45 70,45 C65,45 60,40 60,35 C60,30 65,25 70,25 Z M70,55 C77,55 84,62 84,70 C84,78 77,85 70,85 C63,85 56,78 56,70 C56,62 63,55 70,55 Z" />
+                  <circle cx="70" cy="70" r="5" fill="#E65100" />
+                </svg>
+              </div>
+              <h3 class="editable-text" data-key="ceremony-2-title">Grand Reception</h3>
+              <div class="event-time-place">
+                <p>📅 <strong class="editable-text" data-key="ceremony-2-date">Sunday, 24th November 2026</strong></p>
+                <p>⏰ <strong class="editable-text" data-key="ceremony-2-time">6:30 PM Onwards</strong></p>
+                <p>📍 <strong class="editable-text" data-key="ceremony-2-venue">Grand Ballroom, Mantapam</strong></p>
+              </div>
+              <p class="event-desc editable-text" data-key="ceremony-2-desc">An evening of Carnatic fusion music, congratulations, photos, and a royal South Indian feast (Elai Sapadu).</p>
+              <div class="dress-code">
+                <span>Dress Code:</span> <span class="editable-text" data-key="ceremony-2-dress">Formal Ethnic / Suit / Indo-Western</span>
+              </div>
+              <a id="ceremony-2-map" href="https://maps.google.com/?q=Mylapore+Chennai" target="_blank" rel="noopener" class="btn btn-outline-gold map-link-btn">📍 View Google Map</a>
+            </div>
+          </article>
+
+          <!-- Mehendi & Haldi Card (Turmeric Brass Diya & Henna Paisley Leaf Vector SVG Icon) -->
+          <article class="event-card" data-motion="scale-in">
+            <div class="event-card-img-wrap">
+              <img src="assets/diya_lamp.png" alt="Haldi & Mehendi" class="event-banner-img" id="ceremony-img-haldi" />
+            </div>
+            <div class="event-card-body">
+              <div class="premium-ceremony-icon-wrap">
+                <svg class="ceremony-svg" viewBox="0 0 100 100" width="54" height="54">
+                  <path fill="url(#goldGrad)" d="M50,15 Q65,35 65,55 C65,70 55,80 50,80 C45,80 35,70 35,55 Q35,35 50,15 Z M50,30 Q58,45 58,55 C58,62 54,68 50,68 C46,68 42,62 42,55 Q42,45 50,30 Z" />
+                  <circle cx="50" cy="55" r="4" fill="#E65100" />
+                </svg>
+              </div>
+              <h3 class="editable-text" data-key="ceremony-3-title">Haldi & Mehendi</h3>
+              <div class="event-time-place">
+                <p>📅 <strong class="editable-text" data-key="ceremony-3-date">Saturday, 23rd November 2026</strong></p>
+                <p>⏰ <strong class="editable-text" data-key="ceremony-3-time">10:00 AM Onwards</strong></p>
+                <p>📍 <strong class="editable-text" data-key="ceremony-3-venue">Temple Courtyard Lawn</strong></p>
+              </div>
+              <p class="event-desc editable-text" data-key="ceremony-3-desc">Turmeric blessings, intricate henna designs, folk dances, and vibrant celebrations.</p>
+              <div class="dress-code">
+                <span>Dress Code:</span> <span class="editable-text" data-key="ceremony-3-dress">Bright Yellow / Saffron / Orange</span>
+              </div>
+              <a id="ceremony-3-map" href="https://maps.google.com/?q=Mylapore+Chennai" target="_blank" rel="noopener" class="btn btn-outline-gold map-link-btn">📍 View Google Map</a>
+            </div>
+          </article>
+        </div>
+
+        <!-- SCRATCH REVEAL CARD -->
+        <div class="scratch-section-wrap" data-motion="fade-up">
+          <div class="scratch-header">
+            <h3>✨ Interactive Scratch Card</h3>
+            <p>Scratch the golden coat below to reveal secret venue notes & blessing quote!</p>
+          </div>
+
+          <div class="scratch-card-container">
+            <div class="scratch-secret-content">
+              <div class="secret-inner">
+                <h4>🎉 VIP Guest Note</h4>
+                <p class="secret-text editable-text" data-key="scratch-secret-text">"Your presence is our greatest gift! Valet parking available at North Gate. Feast serves authentic traditional South Indian cuisine on banana leaf."</p>
+                <div class="calendar-add-wrap">
+                  <button id="addToCalBtn" class="btn btn-gold btn-sm">📅 Add to Google Calendar</button>
+                </div>
+              </div>
+            </div>
+            <canvas id="scratchCanvas" width="380" height="220" aria-label="Scratch golden surface to reveal secret details"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- PORTRAIT & MULTI-PHOTO GALLERY CUSTOMIZATION STUDIO -->
+      <section id="gallery" class="section gallery-section">
+        <div class="section-heading" data-motion="fade-up">
+          <span class="eyebrow">Interactive Photo Studio</span>
+          <h2>Portrait & Custom Gallery</h2>
+          <p class="sub-heading editor-only">Upload images here and watch them update live across the Ceremony cards!</p>
+          <div class="decorative-divider"><span>🖼️</span></div>
+        </div>
+
+        <div class="gallery-showcase">
+          <!-- Main Ornate Portrait -->
+          <div class="portrait-container 3d-tilt-box" data-motion="slide-right">
+            <div class="frame-border">
+              <img src="assets/couple_portrait.png" alt="Painting portrait of Meenakshi and Abhinav in traditional wedding attire" class="portrait-img" id="mainPortraitImg" />
+              <div class="frame-overlay-glow"></div>
+            </div>
+            <div class="portrait-caption">
+              <h3>Meenakshi & Abhinav</h3>
+              <p>Captured in classical royal Indian painting art style</p>
+            </div>
+          </div>
+
+          <!-- Multi-Image Upload & Customization Cards -->
+          <div class="photo-grid-wrap" data-motion="slide-left">
+            <div class="photo-grid-header editor-only">
+              <p>Custom Event Image Slots (Upload updates both Gallery & Ceremony cards above)</p>
+            </div>
+
+            <div class="photo-grid" id="photoGrid">
+              <!-- Card 1: Muhurtham / Kalyanam Slot -->
+              <article class="photo-card interactive-upload-card" data-slot="muhurtham">
+                <div class="card-inner">
+                  <img src="assets/couple_portrait.png" alt="Muhurtham Image Slot" class="grid-img" id="img-slot-muhurtham" />
+                  <div class="card-meta">
+                    <strong>Muhurtham / Kalyanam</strong>
+                    <label class="slot-upload-label editor-only">
+                      <span>📷 Upload Photo</span>
+                      <input type="file" accept="image/*" class="slot-file-input" data-target="img-slot-muhurtham" data-sync="ceremony-img-muhurtham" />
+                    </label>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Card 2: Reception Slot -->
+              <article class="photo-card interactive-upload-card" data-slot="reception">
+                <div class="card-inner">
+                  <img src="assets/temple_bg.png" alt="Reception Image Slot" class="grid-img" id="img-slot-reception" />
+                  <div class="card-meta">
+                    <strong>Grand Reception</strong>
+                    <label class="slot-upload-label editor-only">
+                      <span>📷 Upload Photo</span>
+                      <input type="file" accept="image/*" class="slot-file-input" data-target="img-slot-reception" data-sync="ceremony-img-reception" />
+                    </label>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Card 3: Haldi & Mehendi Slot -->
+              <article class="photo-card interactive-upload-card" data-slot="haldi">
+                <div class="card-inner">
+                  <img src="assets/diya_lamp.png" alt="Haldi Image Slot" class="grid-img" id="img-slot-haldi" />
+                  <div class="card-meta">
+                    <strong>Haldi & Mehendi</strong>
+                    <label class="slot-upload-label editor-only">
+                      <span>📷 Upload Photo</span>
+                      <input type="file" accept="image/*" class="slot-file-input" data-target="img-slot-haldi" data-sync="ceremony-img-haldi" />
+                    </label>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Card 4: Sacred Mandapam Slot -->
+              <article class="photo-card interactive-upload-card" data-slot="mandapam">
+                <div class="card-inner">
+                  <img src="assets/lagna_patrika_bg.png" alt="Mandapam Slot" class="grid-img" id="img-slot-mandapam" />
+                  <div class="card-meta">
+                    <strong>Sacred Mandapam</strong>
+                    <label class="slot-upload-label editor-only">
+                      <span>📷 Upload Photo</span>
+                      <input type="file" accept="image/*" class="slot-file-input" data-target="img-slot-mandapam" />
+                    </label>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COUNTDOWN & RSVP SECTION -->
+      <section id="rsvp" class="section rsvp-section">
+        <div class="section-heading" data-motion="fade-up">
+          <span class="eyebrow">Counting Down</span>
+          <h2>Join Our Celebration</h2>
+          <div class="decorative-divider"><span>⏳</span></div>
+        </div>
+
+        <!-- Live Countdown Clock -->
+        <div class="countdown-clock" id="countdownClock" data-motion="scale-in">
+          <div class="time-unit">
+            <span id="days" class="time-number">00</span>
+            <span class="time-label">DAYS</span>
+          </div>
+          <div class="colon">:</div>
+          <div class="time-unit">
+            <span id="hours" class="time-number">00</span>
+            <span class="time-label">HOURS</span>
+          </div>
+          <div class="colon">:</div>
+          <div class="time-unit">
+            <span id="minutes" class="time-number">00</span>
+            <span class="time-label">MINS</span>
+          </div>
+          <div class="colon">:</div>
+          <div class="time-unit">
+            <span id="seconds" class="time-number">00</span>
+            <span class="time-label">SECS</span>
+          </div>
+        </div>
+
+        <!-- RSVP Form Card -->
+        <div class="rsvp-card-wrap glass-card" data-motion="fade-up">
+          <div class="rsvp-header">
+            <h3>Kindly Respond by 1st November 2026</h3>
+            <p>Please let us know if you will be celebrating with us!</p>
+          </div>
+
+          <form id="rsvpForm" class="rsvp-form">
+            <div class="form-group">
+              <label for="guestName">Full Name *</label>
+              <input type="text" id="guestName" required placeholder="e.g. Srikanth & Family" class="form-control" />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="guestEmail">Email / Phone *</label>
+                <input type="text" id="guestEmail" required placeholder="For venue updates" class="form-control" />
+              </div>
+              
+              <div class="form-group">
+                <label for="attendingStatus">Will You Attend? *</label>
+                <select id="attendingStatus" required class="form-control">
+                  <option value="joyfully">Joyfully Accept (Attending)</option>
+                  <option value="regretfully">Regretfully Decline</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="guestCount">Number of Guests</label>
+                <input type="number" id="guestCount" min="1" max="10" value="1" class="form-control" />
+              </div>
+
+              <div class="form-group">
+                <label for="dietary">Dietary Preferences</label>
+                <select id="dietary" class="form-control">
+                  <option value="south-veg">Traditional South Indian Veg (Banana Leaf)</option>
+                  <option value="jain">Jain Pure Veg</option>
+                  <option value="standard-veg">Standard Pure Vegetarian</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="blessingMessage">Wishes & Blessings for the Couple</label>
+              <textarea id="blessingMessage" rows="3" placeholder="Write your warm wishes here..." class="form-control"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-gold btn-block btn-lg">
+              ✨ Send RSVP Confirmation
+            </button>
+          </form>
+
+          <div id="rsvpSuccessMessage" class="rsvp-success-box hidden">
+            <h4>🎉 RSVP Received with Joy!</h4>
+            <p id="rsvpSummaryText">Thank you for confirming. We eagerly look forward to welcoming you!</p>
+            <button id="resetRsvpBtn" class="btn btn-outline-gold btn-sm">Edit Response</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- FINALE FOOTER -->
+      <footer class="finale-footer">
+        <div class="footer-decoration">🪷 ✦ 🪔 ✦ 🪷</div>
+        <h2>Meenakshi & Abhinav</h2>
+        <p class="footer-blessing">"Two hearts united in faith, love, and togetherness."</p>
+        <p class="footer-copy">Crafted with love for South Indian Wedding Celebrations • 2026</p>
+      </footer>
+
     </main>
+
+    <!-- Floating Host Configuration Panel (Editor Only) -->
+    <div id="hostCustomPanel" class="host-config-panel editor-only">
+      <div class="panel-header">
+        <h4>⚙️ Wedding Settings</h4>
+        <button id="closePanelBtn" class="panel-close-btn">&times;</button>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <label for="inputWeddingDate">Wedding Date & Time (for Countdown & Calendar)</label>
+          <input type="datetime-local" id="inputWeddingDate" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="inputMapUrl">Google Maps Location Link</label>
+          <input type="url" id="inputMapUrl" class="form-control" placeholder="https://maps.google.com/..." />
+        </div>
+        <div class="form-group">
+          <label for="inputAudioFile">Upload Custom Wedding Music (MP3)</label>
+          <input type="file" id="inputAudioFile" accept="audio/mp3,audio/*" class="form-control" />
+          <p class="help-text" style="font-size: 0.72rem; color: rgba(253,251,247,0.6); margin-top: 0.2rem;">Choose your favorite MP3 (10s to 1 min length)</p>
+        </div>
+        <button id="saveHostConfigBtn" class="btn btn-gold btn-sm btn-block">Save Settings</button>
+      </div>
+    </div>
+
+    <!-- Toggle Settings Panel Trigger Button -->
+    <button id="togglePanelBtn" class="floating-panel-toggle editor-only" title="Open Wedding Settings">
+      ⚙️
+    </button>
+
+    <!-- JS -->
     <script src="src/main.js"></script>
   </body>
 </html>

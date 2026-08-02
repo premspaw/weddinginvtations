@@ -7,5 +7,10 @@
     "start": "python3 -m http.server 4173 --bind 0.0.0.0",
     "build": "node scripts/build.js"
   },
-  "devDependencies": {}
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mongoose": "^9.9.1",
+    "multer": "^2.2.0"
+  }
 }
